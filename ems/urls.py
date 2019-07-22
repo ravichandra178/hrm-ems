@@ -31,7 +31,7 @@ handler500 = 'ems.views.my_custom_error_view'
 urlpatterns = [
     path('', index, name='home'),
     path('admin/', admin.site.urls),
-    #path('todo/', include('todo.urls', namespace="todo")),
+    path('todo/', include('todo.urls', namespace="todo")),
     path('poll/', include('poll.urls')),
     path('attendance/',include('attendance.urls')),
     path('leave/',include('leave.urls')),

@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_filters',
     'django_elasticsearch_dsl',
-    #'todo',
+    'todo',
     'attendance',
     'leave',
 ]
