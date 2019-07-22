@@ -8,14 +8,10 @@
 
 {% work as result %}
 
-{% load netsal %}
-
-{% net_salary as net %}
 {% if attendance_list %}
 <br>
     <p><b>Attendance as logged in by {{user.get_username}} </p>
 	<p>Details : {{attendance_list.count}} days Present out of {{result}}</b></p>
-	<p>{{net}}</p>
 <style>
 table, th, td {
   border: 1px solid black;
