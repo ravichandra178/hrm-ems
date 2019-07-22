@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+{% load test %}
+
+{% work as result %}
+
+{% load netsal %}
+
+{% net_salary as net %}
+{% if attendance_list %}
+<br>
+    <p><b>Attendance as logged in by {{user.get_username}} </p>
+	<p>Details : {{attendance_list.count}} days Present out of {{result}}</b></p>
+	<p>{{net}}</p>
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+th, td {
+  padding: 10px;
+}
+</style>
+
+{% now "D" as day_today %}
+
+<table style="width:100%">
+
+
+    <tr>
+	    
+        <th>Count</th>
+        <th>Date</th>
+    </tr>
+	
+    {% for i in attendance_list %}
+
+    <tr> 
+	    
+        <td>{{forloop.counter}}</td>
+        <td>{{ i.date_today }}</td>
+		
+		
+    </tr><tr></tr>
+    
+	{% endfor %}
+
+	
+</table>
+{% else %}
+<p> Something terrible happened..! Kindly trya9ain.! </p>
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<br>
+<p><b>LEAVE STATUS</b></p>
+
+{% for i in leave_request %}
+{% if i.approve %}
+<table class="table table-light table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Reason/Reference</th>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Notes</th>
+                
+            </tr>
+            <tr>
+                <td>{{i.reason}}</td>
+                <td>Approved</td>
+				<td>{{i.created_at}}</td>
+				<td>{{i.note}}</td>
+            </tr>
+        </tbody>
+    </table>
+{% else %}
+<table class="table table-light table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Reason</th>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Notes</th>
+                
+            </tr>
+            <tr>
+                <td>{{i.reason}}</td>
+                <td>..........</td>
+				<td>{{i.created_at}}</td>
+				<td>{{i.note}}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endif %}
+{% endfor %}
+{% endblock %}
