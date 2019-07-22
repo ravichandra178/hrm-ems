@@ -15,7 +15,8 @@ def time_stamp():
 
 # Create your models here.
 
-class Holiday(models.Model):
+
+class GeneralHoliday(models.Model):
     holiday = models.DateField(default = today_date)
     def __str__(self):
         return str(self.holiday)

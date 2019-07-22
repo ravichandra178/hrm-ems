@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import Attendance,Bind,Holiday
+from .models import Attendance,Bind,GeneralHoliday
 
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
     readonly_fields=('ip', )
 
-@admin.register(Holiday)
-class HolidayAdmin(admin.ModelAdmin):
+@admin.register(GeneralHoliday)
+class GeneralHolidayAdmin(admin.ModelAdmin):
     pass
 
 @admin.register(Bind)

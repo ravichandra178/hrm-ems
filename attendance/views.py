@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import AttendanceForm
-from .models import Attendance,Bind,Holiday
+from .models import Attendance,Bind,GeneralHoliday
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
@@ -14,7 +14,7 @@ today = datetime.datetime.now()
 today_day = today.strftime("%A")
 this_day = datetime.date.today()
 bind_list = Bind.objects.values_list('ip',flat = True)
-holiday_list = Holiday.objects.values_list('holiday',flat = True)
+holiday_list = GeneralHoliday.objects.values_list('holiday',flat = True)
 
 
 class AttendanceView(LoginRequiredMixin,FormView):
