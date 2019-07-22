@@ -1,14 +1,14 @@
 from django import template
 import calendar
 import datetime
-from attendance.models import Holiday
+from attendance.models import GeneralHoliday
 
 
 register = template.Library()
 
 today = datetime.date.today()
 this_month = today.strftime("%m")
-holidays_list = Holiday.objects.values_list('holiday',flat = True)
+holidays_list = GeneralHoliday.objects.values_list('holiday',flat = True)
 
 @register.simple_tag
 def work():
