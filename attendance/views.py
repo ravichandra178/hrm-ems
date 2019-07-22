@@ -25,16 +25,16 @@ class AttendanceView(LoginRequiredMixin,FormView):
     
     def form_valid(self, form):
         x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip_address = x_forwarded_for.split(',')[-1].strip()
-        else:
-            ip_address = self.request.META.get('REMOTE_ADDR')
+        #if x_forwarded_for:
+            #ip_address = x_forwarded_for.split(',')[-1].strip()
+        #else:
+            #ip_address = self.request.META.get('REMOTE_ADDR')
         if ip_address in bind_list:
             if this_day not in holiday_list:
                 if today_day != 'Sunday':
                     fs=form.save(commit=False)
                     fs.created_by=self.request.user.username
-                    fs.ip=ip_address
+                    fs.ip=x_forwarded_for
                     fs.save()
                     return super().form_valid(form)
                 else:
