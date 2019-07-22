@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,7 +49,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_filters',
     'django_elasticsearch_dsl',
-    'todo',
+    #'todo',
     'attendance',
     'leave',
 ]
@@ -63,7 +64,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'employee.middlewares.RoleMiddleware'
+    'employee.middlewares.RoleMiddleware',
+	'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'ems.urls'
@@ -151,11 +153,12 @@ EMAIL_USE_TLS = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media'
 
 LOGIN_URL = '/login/'
 
@@ -176,4 +179,4 @@ ELASTICSEARCH_DSL={
         'hosts': '127.0.0.1:9200'
     },
 }
-
+django_heroku.settings(locals())
