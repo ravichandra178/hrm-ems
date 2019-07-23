@@ -13,8 +13,7 @@ import requests
 today = datetime.datetime.now()
 today_day = today.strftime("%A")
 this_day = datetime.date.today()
-bind_list = Bind.objects.values_list('ip',flat = True)
-holiday_list = GeneralHoliday.objects.values_list('holiday',flat = True)
+
 
 
 class AttendanceView(LoginRequiredMixin,FormView):
@@ -24,17 +23,19 @@ class AttendanceView(LoginRequiredMixin,FormView):
     
     
     def form_valid(self, form):
+        bind_list = Bind.objects.values_list('ip',flat = True)
+        holiday_list = GeneralHoliday.objects.values_list('holiday',flat = True)
         x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
-        #if x_forwarded_for:
-            #ip_address = x_forwarded_for.split(',')[-1].strip()
-        #else:
-            #ip_address = self.request.META.get('REMOTE_ADDR')
+        if x_forwarded_for:
+            ip_address = x_forwarded_for.split(',')[-1].strip()
+        else:
+            ip_address = self.request.META.get('REMOTE_ADDR')
         if ip_address in bind_list:
             if this_day not in holiday_list:
                 if today_day != 'Sunday':
                     fs=form.save(commit=False)
                     fs.created_by=self.request.user.username
-                    fs.ip=x_forwarded_for
+                    fs.ip=ip_address
                     fs.save()
                     return super().form_valid(form)
                 else:
@@ -42,6 +43,14 @@ class AttendanceView(LoginRequiredMixin,FormView):
             else:
                 return HttpResponse('Are You Sure?!')
         else:
+            subject = 'Approve Bind'
+            message = ip_address+' not in bind list'
+            sender = self.request.user.email
+
+            recipients = ['dashboard.mad@gmail.com'] 
+            
+
+            send_mail(subject, message, sender, recipients)
             return HttpResponse('Something terrible happened.! Kindly trya9ain.!')
 
 class AttendanceList(LoginRequiredMixin,ListView):
@@ -49,5 +58,5 @@ class AttendanceList(LoginRequiredMixin,ListView):
     template_name = 'attendance/thanks.html'
 
     def get_queryset(self):
-        return Attendance.objects.filter(created_by__iexact=self.request.user).filter(date_today__year=today.year,date_today__month=today.month)
+        return Attendance.objects.filter(created_by=self.request.user).filter(date_today__year=today.year,date_today__month=today.month)
         
