@@ -12,7 +12,7 @@ from ems.decorators import admin_hr_required, admin_only
 
 def index(request):
     #return render(request,"auth/profile.html")
-    return HttpResponseRedirect(reverse('my_profile'))
+    return HttpResponseRedirect(reverse('user_login'))
 
 def user_login(request):
     context = {}
