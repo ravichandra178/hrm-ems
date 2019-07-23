@@ -8,10 +8,11 @@ register = template.Library()
 
 today = datetime.date.today()
 this_month = today.strftime("%m")
-holidays_list = GeneralHoliday.objects.values_list('holiday',flat = True)
+
 
 @register.simple_tag
 def work():
+    holidays_list = GeneralHoliday.objects.values_list('holiday',flat = True)
     now = datetime.datetime.now()
     cal = calendar.Calendar()
     working_days = len([x for x in cal.itermonthdays2(now.year, now.month) if x[0] !=0 and x[1] < 6])
