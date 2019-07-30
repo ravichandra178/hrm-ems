@@ -11,6 +11,7 @@ from django.http import HttpResponse
 import requests
 from attendance.templatetags.test import work
 from employee.models import Profile
+from django.core.mail import send_mail
 
 today = datetime.datetime.now()
 today_day = today.strftime("%A")
