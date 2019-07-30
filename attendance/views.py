@@ -71,7 +71,7 @@ def sal(request):
     for object in list_profile:
         object.ns = net_days * object.salary
         object.save()
-    return render(request,'attendance/sal.html',{'list_profile':list_profile})
+    return render(request,'attendance/salary.html',{'list_profile':list_profile})
     
 
 
