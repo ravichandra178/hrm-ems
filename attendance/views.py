@@ -9,6 +9,8 @@ from datetime import date
 import datetime
 from django.http import HttpResponse
 import requests
+from attendance.templatetags.test import work
+from employee.models import Profile
 
 today = datetime.datetime.now()
 today_day = today.strftime("%A")
@@ -59,4 +61,21 @@ class AttendanceList(LoginRequiredMixin,ListView):
 
     def get_queryset(self):
         return Attendance.objects.filter(created_by=self.request.user).filter(date_today__year=today.year,date_today__month=today.month)
+
+
+def sal(request):
+    list_profile = Profile.objects.filter(user = request.user)
+    attendance_list = Attendance.objects.filter(created_by=request.user).filter(date_today__year=today.year,date_today__month=today.month)
+    working_days = work()
+    net_days = len(attendance_list)/working_days
+    for object in list_profile:
+        object.ns = net_days * object.salary
+        object.save()
+    return render(request,'attendance/sal.html',{'list_profile':list_profile})
+    
+
+
+    
+        
+
         
